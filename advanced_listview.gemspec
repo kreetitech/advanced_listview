@@ -2,7 +2,7 @@
 require File.expand_path('../lib/advanced_listview/version', __FILE__)
 
 Gem::Specification.new do |gem|
-  gem.authors       = ["Santanu Karmakar"]
+  gem.authors       = ["Kreeti Technologies"]
   gem.email         = ["skarmakar@kreeti.com"]
   gem.description   = %q{TODO: Write a gem description}
   gem.summary       = %q{TODO: Write a gem summary}
