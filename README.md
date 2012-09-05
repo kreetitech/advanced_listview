@@ -6,15 +6,11 @@ TODO: Write a gem description
 
 Add this line to your application's Gemfile:
 
-    gem 'advanced_listview'
+    gem 'advanced_listview', :git => "git://github.com/kreetitech/advanced_listview.git"
 
 And then execute:
 
     $ bundle
-
-Or install it yourself as:
-
-    $ gem install advanced_listview
 
 ## Usage
 
