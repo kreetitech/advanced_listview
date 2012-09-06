@@ -2,6 +2,8 @@
 require File.expand_path('../lib/advanced_listview/version', __FILE__)
 
 Gem::Specification.new do |gem|
+  # If you add a dependency, please maintain alphabetical order
+  gem.add_dependency 'will_paginate', '~> 3.0.3'
   gem.authors       = ["Kreeti Technologies"]
   gem.email         = ["skarmakar@kreeti.com"]
   gem.description   = %q{AdvancedListview provides basic sort, search, filter, csv export, and json response for list view.}

@@ -16,7 +16,8 @@ module ListviewModel
     @searchable_fields.collect(&:to_s)
   end
 
-  def get_sorted_collection(sort, reverse, per_page, offset, query = nil, filters = nil)
+  # use will_paginate gem for pagination
+  def get_sorted_collection(sort, reverse, page, per_page, query = nil, filters = nil)
     scope = self
     scope = scope.where(query_conditions(query)) if query
     scope = scope.where(filter_conditions(filters)) if filters
@@ -24,7 +25,19 @@ module ListviewModel
     order = "#{self.table_name}.#{sort}"
     order << " desc" if reverse
 
-    scope.order(order).limit(per_page).offset(offset)
+    if per_page
+      # using will_paginate
+      total = scope.count
+      current_page = [page.to_i, 1].max
+      offset = [0, page.to_i - 1].max * per_page
+
+      collection = scope.limit(per_page).offset(offset).order(order)
+      results = WillPaginate::Collection.create(current_page, per_page, total) do |pager|
+        pager.replace(collection)
+      end
+    else
+      scope.order(order)
+    end
   end
 
   private

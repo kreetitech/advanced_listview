@@ -15,7 +15,7 @@ module ListviewHelper
      </form>".html_safe
   end
 
-  def csv_export_link(fields = [])
+  def listview_csv_export_link(fields = [])
     fields = fields.to_a.join(",").presence
     link_to "Export CSV", url_for(params.merge(:fields => fields, :format => "csv")), :class => "btn btn-info"
   end

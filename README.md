@@ -12,7 +12,40 @@ And then execute:
 
     $ bundle
 
-## Usage
+## Basic Usage
+    ## perform a basic query
+    @posts = get_sorted Post
+    
+    ## or perform a paginated query
+    @posts = get_sorted(Post, :page => params[:page], :per_page => 30)
+    
+    ## render page links in the view
+    <%= will_paginate @posts %>
+    
+    ## render page links in the view, for bootstrap
+    <%= bootstrap_will_paginate @posts %>
+    
+    ## configure searchable fields in the model
+    listview_search :only => [:title]
+    
+    ## or you can use except
+    listview_search :except => [:id, :created_at, :updated_at]
+    
+    ## search form in the list view (search renders the same page the method being used for list)
+    <%= listview_search_form %>
+    
+    ## csv export link, from the list page
+    <%= listview_csv_export_link %>
+    
+    ## sortable column header, database attribute name and link name same
+    <%= listview_sort_link "name" %>
+
+    ## sortable column header, database attribute name and link name different
+    <%= listview_sort_link "name", "Title" %>
+    
+    ## filters params example => {"filters"=>{"active"=>"true", "published" => true}}
+
+This gem adds sorting, searching, filtering and csv export features.    
 
 TODO: Write usage instructions here
 
