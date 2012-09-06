@@ -31,7 +31,7 @@ And then execute:
     ## or you can use except
     listview_search :except => [:id, :created_at, :updated_at]
     
-    ## search form in the list view (search renders the same page the method being used for list)
+    ## search form in the list view (search renders the same page used for list)
     <%= listview_search_form %>
     
     ## csv export link, from the list page
@@ -43,11 +43,7 @@ And then execute:
     ## sortable column header, database attribute name and link name different
     <%= listview_sort_link "name", "Title" %>
     
-    ## filters params example => {"filters"=>{"active"=>"true", "published" => true}}
-
-This gem adds sorting, searching, filtering and csv export features.    
-
-TODO: Write usage instructions here
+    ## To use filter, params should have filters like this => {"filters"=>{"active"=>"true", "published" => true}}
 
 ## Contributing
 
