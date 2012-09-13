@@ -1,11 +1,11 @@
 module ListviewHelper
-  def listview_sort_link(sort_field, field_name = nil)
+  def listview_sort_link(sort_field, options = {}, html_options = {})
     sort_field.downcase!
-    field_name = field_name || sort_field.capitalize
+    field_name = options[:label] || sort_field.capitalize
     reverse = params[:sort] == sort_field && params[:reverse].blank?
     options = {:sort => sort_field, :per_page => params[:per_page], :offset => params[:offset]}
     options.merge!(:reverse => reverse || nil)
-    link_to field_name, params.merge(options)
+    link_to field_name, params.merge(options), html_options
   end
 
   def listview_search_form
@@ -15,8 +15,8 @@ module ListviewHelper
      </form>".html_safe
   end
 
-  def listview_csv_export_link(fields = [])
-    fields = fields.to_a.join(",").presence
-    link_to "Export CSV", url_for(params.merge(:fields => fields, :format => "csv")), :class => "btn btn-info"
+  def listview_csv_export_link(options = {})
+    fields = options.delete(:fields).to_a.join(",").presence
+    link_to "Export CSV", url_for(params.merge(:fields => fields, :format => "csv")), options.delete(:html)
   end
 end

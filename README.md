@@ -36,6 +36,9 @@ And then execute:
     
     ## csv export link, from the list page
     <%= listview_csv_export_link %>
+
+    ## csv export link, with some fields selected, and styling
+    <%= listview_csv_export_link(:fields => [:id, :name], :html => {:class => "pull-right"}) %>
     
     ## sortable column header, database attribute name and link name same
     <%= listview_sort_link "name" %>

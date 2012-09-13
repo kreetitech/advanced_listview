@@ -21,10 +21,16 @@ module ListviewController
   end
 
   def export_csv(records)
+    first = records.first
+    unless first
+      flash[:error] = "No records found!"
+      redirect_to request.referer and return false
+    end
+
     fields = if params[:fields].present?
                params[:fields].split(",")
              else
-               records.first.class.column_names
+               first.class.column_names
              end
     out = CSV.generate do |csv|
       csv << fields
