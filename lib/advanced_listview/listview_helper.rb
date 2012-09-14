@@ -5,7 +5,15 @@ module ListviewHelper
     reverse = params[:sort] == sort_field && params[:reverse].blank?
     options = {:sort => sort_field, :per_page => params[:per_page], :offset => params[:offset]}
     options.merge!(:reverse => reverse || nil)
-    link_to field_name, params.merge(options), html_options
+
+    # html class
+    clazz = ["sortable_link", html_options[:class]]
+    if params[:sort] == sort_field
+      clazz << (reverse ? "sort_down" : "sort_up")
+    end
+    clazz = clazz.compact.join(" ")
+
+    link_to field_name, params.merge(options), html_options.merge(:class => clazz)
   end
 
   def listview_search_form

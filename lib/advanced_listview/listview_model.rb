@@ -22,7 +22,9 @@ module ListviewModel
     scope = scope.where(query_conditions(query)) if query
     scope = scope.where(filter_conditions(filters)) if filters
 
-    order = "#{self.table_name}.#{sort}"
+    # allow sort param like table_name.fieldname
+    sort = sort.split("-")
+    order = sort.size == 1 ? "#{self.table_name}.#{sort.first}" : sort.join(".")
     order << " desc" if reverse
 
     if per_page
