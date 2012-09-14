@@ -1,7 +1,7 @@
 module ListviewHelper
-  def listview_sort_link(sort_field, options = {}, html_options = {})
+  def listview_sort_link(sort_field, field_name = nil, html_options = {})
     sort_field.downcase!
-    field_name = options[:label] || sort_field.capitalize
+    field_name = field_name || sort_field.capitalize
     reverse = params[:sort] == sort_field && params[:reverse].blank?
     options = {:sort => sort_field, :per_page => params[:per_page], :offset => params[:offset]}
     options.merge!(:reverse => reverse || nil)
