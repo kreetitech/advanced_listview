@@ -24,12 +24,12 @@ module ListviewModel
 
     # allow sort param like table_name.fieldname
     sort = sort.split(".")
-    table = if sort.size > 1 && self.respond_to?(sort.first)
+    table = if sort.size > 1 && self.method_defined?(sort.first)
               sort.first
             else
               self.table_name
             end
-    attr = self.respond_to?(sort.last) ? sort.last : "id"
+    attr = self.method_defined?(sort.last) ? sort.last : "id"
     order = "#{table}.#{attr}"
     order << " desc" if reverse
 
