@@ -2,8 +2,14 @@ module ListviewController
   # to export csv, just add a .csv as extension, send comma separated pparams[:fields] for selective fields
   # example params[:fields] = "id,name,address1"
   def get_sorted(arel, options = {})
-    sort = params[:sort].presence || "id"
-    reverse = params[:reverse].presence
+    # order options
+    order = if params[:sort].blank? and options[:order].present?
+              options[:order]
+            else
+              sort = params[:sort].presence || "id"
+              sort = sort + " desc" if params[:reverse].present?
+              sort
+            end
     query = params[:query].presence
     filters = params[:filters].presence
 
@@ -11,7 +17,7 @@ module ListviewController
     per_page = options[:per_page].presence
     page = options[:page].presence
 
-    records = arel.get_sorted_collection(sort, reverse, page, per_page, query, filters)
+    records = arel.get_sorted_collection(order, page, per_page, query, filters)
 
     respond_to do |format|
       format.html { records}

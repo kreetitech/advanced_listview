@@ -19,6 +19,9 @@ And then execute:
     ## or perform a paginated query
     @posts = get_sorted(Post, :page => params[:page], :per_page => 30)
     
+    ## you ca provide default order, will work when params[:sort] is blank
+    @posts = get_sorted(Post, :page => params[:page], :per_page => 30, :order => "created_at desc")
+    
     ## render page links in the view
     <%= will_paginate @posts %>
     

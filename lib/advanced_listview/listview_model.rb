@@ -17,21 +17,20 @@ module ListviewModel
   end
 
   # use will_paginate gem for pagination
-  def get_sorted_collection(sort, reverse, page, per_page, query = nil, filters = nil)
+  def get_sorted_collection(order, page, per_page, query = nil, filters = nil)
     scope = self
     scope = scope.where(query_conditions(query)) if query
     scope = scope.where(filter_conditions(filters)) if filters
 
-    # allow sort param like table_name.fieldname
-    sort = sort.split(".")
-    table = if sort.size > 1 && self.method_defined?(sort.first)
-              sort.first
+    # allow order param like table_name.fieldname
+    order = order.split(".")
+    table = if order.size > 1 && self.method_defined?(order.first)
+              order.first
             else
               self.table_name
             end
-    attr = self.method_defined?(sort.last) ? sort.last : "id"
+    attr = self.method_defined?(order.last.split.first) ? order.last : "id"
     order = "#{table}.#{attr}"
-    order << " desc" if reverse
 
     if per_page
       # using will_paginate
