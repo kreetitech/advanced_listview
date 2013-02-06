@@ -8,18 +8,24 @@ module ListviewModel
                            options[:only]
                          elsif options.has_key?(:except)
                            self.column_names - options[:except].collect(&:to_s)
-                         end
-  end
-
-  def searchable_fields
-    raise "Please mention default searchable fields for #{self.name} model!" unless @searchable_fields
-    @searchable_fields.collect(&:to_s)
+                         else
+                           []
+                         end.collect { |field| "#{self.table_name}.#{field}"}
+    @includes = []
+    if options.has_key?(:include)
+      options[:include].each do |model_name, fields|
+        @includes << model_name
+        fields.each do |field|
+          @searchable_fields << "#{model_name.to_s.capitalize.constantize.table_name}.#{field.to_s}"
+        end
+      end
+    end
   end
 
   # use will_paginate gem for pagination
   def get_sorted_collection(order, page, per_page, query = nil, filters = nil)
     scope = self
-    scope = scope.where(query_conditions(query)) if query
+    scope = scope.includes(@includes).where(query_conditions(query)) if query
     scope = scope.where(filter_conditions(filters)) if filters
 
     # allow order param like table_name.fieldname
@@ -51,8 +57,8 @@ module ListviewModel
 
   def query_conditions(query)
     [].tap do |cond|
-      searchable_fields.each do |field|
-        cond << "#{self.table_name}.#{field} like '%#{query}%'"
+      @searchable_fields.each do |field|
+        cond << "#{field} like '%#{query}%'"
       end
     end.join(" OR ")
   end
