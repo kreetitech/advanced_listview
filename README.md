@@ -33,6 +33,9 @@ And then execute:
     
     ## or you can use except
     listview_search :except => [:id, :created_at, :updated_at]
+
+    ## you can use associations in the search as well
+    listview_search :except => [:id, :created_at, :updated_at], :include => {:address => [:address1, :address2]}
     
     ## search form in the list view (search renders the same page used for list)
     <%= listview_search_form %>
